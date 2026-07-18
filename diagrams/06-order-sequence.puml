@@ -1,0 +1,32 @@
+@startuml
+title 주문 생성 - 성공 및 결제 실패 동작
+actor Customer
+participant "Web App" as Web
+participant "Order Service" as Order
+participant "Payment Gateway" as Payment
+database "Order DB" as DB
+queue "Event Broker" as Broker
+
+Customer -> Web : 주문 제출
+Web -> Order : POST /orders\nIdempotency-Key
+Order -> Order : 상품·금액 검증
+Order -> Payment : 결제 승인 요청
+
+alt 승인 성공
+  Payment --> Order : 승인 ID
+  Order -> DB : 주문 + outbox 저장
+  DB --> Order : commit
+  Order --> Web : 201 Created
+  Web --> Customer : 주문 번호 표시
+  Order -> Broker : OrderPlaced 발행
+else 승인 실패
+  Payment --> Order : 거절 사유
+  Order --> Web : 422 Payment Declined
+  Web --> Customer : 결제수단 변경 안내
+end
+
+note over Order,Broker
+  이벤트 전달은 최소 한 번(at-least-once)을 가정한다.
+  소비자는 주문 ID를 기준으로 멱등 처리한다.
+end note
+@enduml

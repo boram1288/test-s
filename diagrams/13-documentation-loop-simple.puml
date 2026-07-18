@@ -1,0 +1,17 @@
+@startuml
+title 문서화와 검증 순환
+left to right direction
+
+rectangle "질문 수집" as Q
+rectangle "뷰 선택" as S
+rectangle "문서 작성" as W
+rectangle "독자 검토" as R
+rectangle "문서 갱신" as U
+
+Q --> S
+S --> W
+W --> R
+R --> U : 모호함·누락 발견
+U --> R : 다시 검증
+R --> Q : 새로운 질문
+@enduml

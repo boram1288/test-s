@@ -1,0 +1,45 @@
+@startuml
+title 모호한 화살표를 피하는 법
+left to right direction
+skinparam componentStyle rectangle
+skinparam packageStyle rectangle
+
+package "나쁜 예: 의미를 추측해야 함" #FFE4E1 {
+  component "A" as BadA
+  component "B" as BadB
+
+  BadA --> BadB
+
+  note bottom of BadA
+    A와 B는 무엇인가?
+    모듈, 프로세스, 서버 중 어느 것인가?
+  end note
+
+  note bottom of BadB
+    화살표는 무엇인가?
+    호출, 데이터 흐름, 의존성 중 어느 것인가?
+  end note
+}
+
+package "좋은 예: 요소·관계·방향을 명시함" #E2F4DF {
+  component "Order Service\n<<runtime service>>" as Order
+  component "Payment Gateway\n<<external service>>" as Payment
+  queue "Event Broker\n<<message broker>>" as Broker
+
+  Order -[#black]-> Payment : HTTPS POST /payments\n동기 결제 승인 요청
+  Payment -[#green,dashed]-> Order : HTTP response\n승인 결과 데이터
+  Order -[#blue,dotted]-> Broker : OrderPlaced\n비동기 이벤트 발행
+}
+
+BadB -[hidden]-> Order
+
+legend bottom
+  |= 표기 |= 의미 |
+  | 검은 실선 화살표 | 호출자가 시작하는 동기 요청 |
+  | 초록 점선 화살표 | 요청에 대한 응답 데이터 |
+  | 파란 점선 화살표 | 비동기 이벤트 이동 |
+
+  선의 라벨은 프로토콜, 메시지 또는 관계 이름을 나타낸다.
+  방향은 각 관계의 시작점에서 대상 또는 데이터 이동 방향을 가리킨다.
+endlegend
+@enduml

@@ -1,0 +1,18 @@
+@startuml
+title 주문 처리의 정상 및 실패 흐름
+actor 고객
+participant "Order Service" as Order
+participant "Payment Gateway" as Payment
+database "Order DB" as DB
+
+고객 -> Order : 주문 요청
+Order -> Payment : 결제 승인
+alt 승인 성공
+  Payment --> Order : 승인 ID
+  Order -> DB : 주문 저장
+  Order --> 고객 : 주문 번호
+else 승인 실패
+  Payment --> Order : 거절 사유
+  Order --> 고객 : 결제 실패 안내
+end
+@enduml

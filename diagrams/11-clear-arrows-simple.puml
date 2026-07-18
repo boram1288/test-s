@@ -1,0 +1,24 @@
+@startuml
+title 화살표의 의미를 명시한다
+left to right direction
+
+package "모호한 표현" #FFE4E1 {
+  [A] as A
+  [B] as B
+  A --> B
+}
+
+package "명확한 표현" #E2F4DF {
+  [Order Service] as Order
+  [Payment Gateway] as Payment
+  queue "Event Broker" as Broker
+
+  Order --> Payment : HTTPS 동기 호출
+  Order ..> Broker : OrderPlaced 발행
+}
+
+legend bottom
+  실선 화살표: 동기 호출 방향
+  점선 화살표: 비동기 이벤트 이동 방향
+endlegend
+@enduml

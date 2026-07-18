@@ -1,0 +1,37 @@
+@startuml
+title 온라인 서점 - 모듈 uses 뷰
+left to right direction
+skinparam packageStyle rectangle
+
+package "catalog" as catalog {
+  [Catalog API] as catalogApi
+  [Catalog Repository] as catalogRepo
+}
+
+package "order" as order {
+  [Order Application] as orderApp
+  [Order Domain] as orderDomain
+  [Payment Port] as paymentPort
+}
+
+package "payment" as payment {
+  [Payment Adapter] as paymentAdapter
+}
+
+package "shared" as shared {
+  [Money] as money
+}
+
+catalogApi ..> catalogRepo : uses
+catalogRepo ..> money : uses
+orderApp ..> orderDomain : uses
+orderApp ..> catalogApi : uses
+orderApp ..> paymentPort : uses
+paymentAdapter ..> paymentPort : implements
+orderDomain ..> money : uses
+
+legend bottom
+  점선 화살표 A ..> B: A의 올바른 구현이 B에 의존한다.
+  이 뷰는 런타임 호출 순서나 배포 위치를 표현하지 않는다.
+endlegend
+@enduml

@@ -1,0 +1,19 @@
+@startuml
+title 아키텍처를 바라보는 세 가지 핵심 뷰타입
+top to bottom direction
+skinparam componentStyle rectangle
+
+rectangle "소프트웨어 아키텍처" as Architecture
+rectangle "모듈 뷰타입\n구현 단위와 정적 관계" as Module #DDEBFF
+rectangle "컴포넌트-커넥터 뷰타입\n런타임 요소와 상호작용" as CC #E2F4DF
+rectangle "할당 뷰타입\n소프트웨어와 환경의 대응" as Allocation #FFF0D6
+
+Architecture --> Module : 코드는 어떻게 조직되는가?
+Architecture --> CC : 실행 중 어떻게 협력하는가?
+Architecture --> Allocation : 어디에 배치되고 누가 맡는가?
+
+legend bottom
+  화살표는 "해당 관점으로 기술한다"는 분류 관계다.
+  시스템 내부의 호출이나 데이터 흐름을 뜻하지 않는다.
+endlegend
+@enduml

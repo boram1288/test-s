@@ -1,0 +1,37 @@
+@startuml
+title 온라인 서점 - 배포 할당 뷰
+skinparam componentStyle rectangle
+
+cloud "Internet" as internet
+
+node "Public subnet" as public {
+  node "Web node\nreplicas: 2..6" as webNode {
+    artifact "web-app" as webArtifact
+  }
+}
+
+node "Application subnet" as app {
+  node "Container platform" as platform {
+    artifact "catalog-service\nreplicas: 2..10" as catalogArtifact
+    artifact "order-service\nreplicas: 2..10" as orderArtifact
+    artifact "notification-worker\nreplicas: 1..5" as notificationArtifact
+  }
+  queue "managed event broker" as broker
+}
+
+node "Data subnet" as data {
+  database "order-db\nprimary + standby" as db
+}
+
+internet --> webNode : TLS 443
+webNode --> platform : TLS 443
+orderArtifact --> broker : TLS 9093
+notificationArtifact --> broker : TLS 9093
+orderArtifact --> db : TLS 5432
+
+legend bottom
+  중첩은 아티팩트가 해당 실행 환경에 배포됨을 뜻한다.
+  화살표는 허용된 네트워크 통신과 포트를 뜻한다.
+  subnet 경계는 네트워크 신뢰 경계다.
+endlegend
+@enduml

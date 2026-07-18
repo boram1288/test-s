@@ -1,0 +1,30 @@
+@startuml
+title 온라인 서점 - 런타임 컴포넌트-커넥터 뷰
+left to right direction
+skinparam componentStyle rectangle
+
+actor Customer
+component "Web App" as web
+component "Catalog Service" as catalog
+component "Order Service" as order
+component "Payment Gateway" as payment
+queue "Event Broker" as broker
+component "Inventory Worker" as inventory
+component "Notification Worker" as notification
+database "Order DB" as orderDb
+
+Customer --> web : HTTPS
+web --> catalog : HTTPS/JSON\n동기 질의
+web --> order : HTTPS/JSON\n동기 명령
+order --> payment : HTTPS/JSON\n동기 승인
+order --> orderDb : SQL transaction
+order -[#blue,dashed]-> broker : OrderPlaced\n비동기 발행
+broker -[#blue,dashed]-> inventory : OrderPlaced\n비동기 구독
+broker -[#blue,dashed]-> notification : OrderPlaced\n비동기 구독
+
+legend bottom
+  실선 화살표: 요청자가 시작하는 동기 상호작용
+  파란 점선 화살표: 비동기 이벤트 이동
+  SQL 선은 Order Service만 Order DB를 직접 접근함을 뜻한다.
+endlegend
+@enduml
