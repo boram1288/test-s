@@ -14,8 +14,19 @@
 
 이처럼 이후 구현과 운영을 크게 제약하는 결정을 **아키텍처 결정**이라고 볼 수 있다. 이러한 결정은 개발·테스트·배포·운영 등 여러 사람의 업무에 영향을 주므로 머릿속이나 회의 기록에만 남겨서는 안 된다.
 
-```text
-품질 목표와 제약 → 큰 구조에 관한 결정 → 개발·테스트·배포·운영 방식에 영향 → 공통으로 참조할 아키텍처 문서 필요
+```plantuml
+@startuml
+left to right direction
+
+rectangle "품질 목표와 제약" as QualityGoals
+rectangle "큰 구조에 관한 결정" as ArchitectureDecision
+rectangle "개발·테스트·배포·운영 방식에 영향" as WorkImpact
+rectangle "공통으로 참조할 아키텍처 문서 필요" as DocumentationNeed
+
+QualityGoals --> ArchitectureDecision
+ArchitectureDecision --> WorkImpact
+WorkImpact --> DocumentationNeed
+@enduml
 ```
 
 > 아키텍처 문서의 목적은 이해관계자가 업무에 필요한 결정을 내릴 수 있게 하는 것이다.
