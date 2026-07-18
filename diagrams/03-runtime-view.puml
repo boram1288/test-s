@@ -1,5 +1,5 @@
 @startuml
-title 온라인 서점 - 런타임 컴포넌트-커넥터 뷰
+title 온라인 서점 - 런타임 컴포넌트-커넥터 View
 left to right direction
 skinparam componentStyle rectangle
 

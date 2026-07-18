@@ -1,5 +1,5 @@
 @startuml
-title 온라인 서점 - 모듈 uses 뷰
+title 온라인 서점 - 모듈 uses View
 left to right direction
 skinparam packageStyle rectangle
 
@@ -32,6 +32,6 @@ orderDomain ..> money : uses
 
 legend bottom
   점선 화살표 A ..> B: A의 올바른 구현이 B에 의존한다.
-  이 뷰는 런타임 호출 순서나 배포 위치를 표현하지 않는다.
+  이 View는 런타임 호출 순서나 배포 위치를 표현하지 않는다.
 endlegend
 @enduml

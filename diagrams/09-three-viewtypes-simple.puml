@@ -2,19 +2,19 @@
 title 같은 온라인 서점을 세 관점으로 보기
 left to right direction
 
-package "모듈 뷰" #DDEBFF {
+package "모듈 View" #DDEBFF {
   [Order Module] as M1
   [Payment Adapter] as M2
   M1 ..> M2 : uses
 }
 
-package "C&C 뷰" #E2F4DF {
+package "C&C View" #E2F4DF {
   [Order Service] as C1
   [Payment Gateway] as C2
   C1 --> C2 : HTTPS 호출
 }
 
-package "배포 뷰" #FFF0D6 {
+package "배포 View" #FFF0D6 {
   node "Container Node" as N1 {
     artifact "order-service" as A1
   }

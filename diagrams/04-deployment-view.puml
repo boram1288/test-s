@@ -1,5 +1,5 @@
 @startuml
-title 온라인 서점 - 배포 할당 뷰
+title 온라인 서점 - 배포 할당 View
 skinparam componentStyle rectangle
 
 cloud "Internet" as internet

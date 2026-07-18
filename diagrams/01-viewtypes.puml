@@ -1,12 +1,12 @@
 @startuml
-title 아키텍처를 바라보는 세 가지 핵심 뷰타입
+title 아키텍처를 바라보는 세 가지 핵심 ViewType
 top to bottom direction
 skinparam componentStyle rectangle
 
 rectangle "소프트웨어 아키텍처" as Architecture
-rectangle "모듈 뷰타입\n구현 단위와 정적 관계" as Module #DDEBFF
-rectangle "컴포넌트-커넥터 뷰타입\n런타임 요소와 상호작용" as CC #E2F4DF
-rectangle "할당 뷰타입\n소프트웨어와 환경의 대응" as Allocation #FFF0D6
+rectangle "모듈 ViewType\n구현 단위와 정적 관계" as Module #DDEBFF
+rectangle "컴포넌트-커넥터 ViewType\n런타임 요소와 상호작용" as CC #E2F4DF
+rectangle "할당 ViewType\n소프트웨어와 환경의 대응" as Allocation #FFF0D6
 
 Architecture --> Module : 코드는 어떻게 조직되는가?
 Architecture --> CC : 실행 중 어떻게 협력하는가?

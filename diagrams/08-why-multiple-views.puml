@@ -1,5 +1,5 @@
 @startuml
-title 질문이 다르면 필요한 뷰도 다르다
+title 질문이 다르면 필요한 View도 다르다
 left to right direction
 
 actor 개발자
@@ -10,9 +10,9 @@ rectangle "코드 변경 영향?" as Q1
 rectangle "장애 전파 경로?" as Q2
 rectangle "팀별 책임?" as Q3
 
-rectangle "모듈 뷰" as V1 #DDEBFF
-rectangle "C&C 뷰" as V2 #E2F4DF
-rectangle "할당 뷰" as V3 #FFF0D6
+rectangle "모듈 View" as V1 #DDEBFF
+rectangle "C&C View" as V2 #E2F4DF
+rectangle "할당 View" as V3 #FFF0D6
 
 개발자 --> Q1
 Q1 --> V1

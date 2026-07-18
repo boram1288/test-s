@@ -1,17 +1,17 @@
 @startuml
 left to right direction
 
-package "모듈 뷰" #DDEBFF {
+package "모듈 View" #DDEBFF {
   [Order Module] as OrderModule
   [Payment Adapter] as PaymentAdapter
 }
 
-package "C&C 뷰" #E2F4DF {
+package "C&C View" #E2F4DF {
   [Order Service #1] as Order1
   [Order Service #2] as Order2
 }
 
-package "배포 뷰" #FFF0D6 {
+package "배포 View" #FFF0D6 {
   node "Container Platform" as Platform
 }
 

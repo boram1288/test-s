@@ -3,7 +3,7 @@ title 문서화와 검증 순환
 left to right direction
 
 rectangle "질문 수집" as Q
-rectangle "뷰 선택" as S
+rectangle "View 선택" as S
 rectangle "문서 작성" as W
 rectangle "독자 검토" as R
 rectangle "문서 갱신" as U
