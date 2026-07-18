@@ -96,15 +96,7 @@ endlegend
 
 - **뷰**: 특정 이해관계자의 관심사를 위해 실제 시스템 일부를 표현한 결과물
 - **뷰타입**: 표현할 요소와 관계의 종류를 정한 범주
-  - 예: **모듈 뷰타입**은 `Order`, `Catalog`, `Payment` 같은 구현 모듈과 모듈 사이의 포함(`is-part-of`), 사용(`uses`), 일반화(`is-a`) 관계를 표현 대상으로 정한다.
 - **스타일**: 한 뷰타입 안에서 사용할 요소·관계·제약을 더 구체화한 규칙
-  - 예: 모듈 뷰타입의 **계층 스타일**은 모듈을 `Presentation`, `Application`, `Domain`, `Infrastructure` 계층으로 묶고, 상위 계층이 허용된 하위 계층만 사용하도록 `allowed-to-use` 관계를 제한한다.
-
-## 3. 질문에 따라 세 가지 뷰타입을 선택한다
-
-> **세 뷰타입은 서로 다른 질문에 답하므로 필요한 경우 함께 사용한다.**
-
-세 뷰타입은 하나만 선택해야 하는 경쟁 관계가 아니다.
 
 ### PDF에 제시된 뷰타입별 스타일
 
@@ -124,6 +116,12 @@ endlegend
 | 할당(Allocation) | 작업 배정(Work Assignment) | 소프트웨어 요소와 개발 조직의 `allocated-to` 관계 | 주문 모듈은 Order Team이, 결제 어댑터는 Payment Team이 담당한다. |
 
 *출처: Clements et al.,* Documenting Software Architectures: Views and Beyond, *Chapter 2, pp. 59–98; Chapter 4, pp. 117–125; Chapter 6, pp. 156–168.*
+
+## 3. 질문에 따라 세 가지 뷰타입을 선택한다
+
+> **세 뷰타입은 서로 다른 질문에 답하므로 필요한 경우 함께 사용한다.**
+
+세 뷰타입은 하나만 선택해야 하는 경쟁 관계가 아니다.
 
 ### 3.1 모듈 뷰타입: 코드는 어떻게 나뉘는가
 
