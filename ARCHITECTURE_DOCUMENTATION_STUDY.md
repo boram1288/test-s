@@ -81,9 +81,9 @@
 
 > **모듈 뷰는 구현 단위와 정적 관계를 보여준다.**
 
-![PDF Figure 9의 모듈 uses 관계와 분해 예시](diagrams/14-module-uses-from-book.png)
+![모듈 분해 전후의 uses 관계](diagrams/27-module-uses-redrawn.png)
 
-*출처: Clements et al.,* Documenting Software Architectures: Views and Beyond, *p. 70, Figure 9.*
+*Clements et al.,* Documenting Software Architectures: Views and Beyond, *p. 70, Figure 9를 바탕으로 재작성.*
 
 - 요소: 패키지, 클래스, 계층, 서브시스템
 - 관계: 포함(`is-part-of`), 사용(`uses`), 일반화(`is-a`)

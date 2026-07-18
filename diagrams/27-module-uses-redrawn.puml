@@ -1,0 +1,39 @@
+@startuml
+title 모듈 분해 전후의 uses 관계
+top to bottom direction
+skinparam shadowing false
+
+rectangle "상위 수준" as Overview {
+  folder "User Interface" as UserInterface
+  folder "Data Base" as DatabaseOverview
+
+  UserInterface ..> DatabaseOverview : <<uses>>
+}
+
+rectangle "분해한 수준" as Decomposition {
+  folder "User Interface" as UserInterfaceDetail {
+    folder "Module A" as ModuleA
+    folder "Module B" as ModuleB
+    folder "Module C" as ModuleC
+
+    ModuleA -[hidden]right- ModuleB
+    ModuleB -[hidden]right- ModuleC
+  }
+
+  folder "Data Base" as DatabaseDetail
+
+  ModuleA ..> DatabaseDetail : <<uses>>
+  ModuleB ..> DatabaseDetail : <<uses>>
+  ModuleC ..> ModuleB : <<uses>>
+}
+
+Overview -[hidden]down- Decomposition
+
+legend bottom
+  |= 표기 |= 의미 |
+  | 폴더 모양 상자 | 모듈 |
+  | <<uses>> 점선 화살표 | 출발 모듈이 대상 모듈의 올바른 구현에 의존함 |
+
+  상위 모듈의 uses 관계는 분해 후 하나 이상의 하위 모듈에 나타나야 한다.
+endlegend
+@enduml
