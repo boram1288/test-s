@@ -4,17 +4,7 @@
 
 > **전체 흐름: 중요한 결정을 공유해야 한다 → 한 그림으로는 부족하다 → 이해관계자에 맞는 뷰를 고른다 → 구조와 동작을 명확하게 기록한다 → 뷰를 연결한다 → 독자가 사용할 수 있는지 검증한다.**
 
-```plantuml
-@startuml
-left to right direction
-rectangle "결정" as Decision
-rectangle "뷰 선택" as Selection
-rectangle "명확한 기록" as Description
-rectangle "연결" as Mapping
-rectangle "독자 검증" as Validation
-Decision --> Selection --> Description --> Mapping --> Validation
-@enduml
-```
+![아키텍처 문서화 전체 흐름 예시](diagrams/15-documentation-flow.png)
 
 ## 1. 왜 아키텍처를 문서화하는가
 
@@ -26,20 +16,7 @@ Decision --> Selection --> Description --> Mapping --> Validation
 
 이처럼 이후 구현과 운영을 크게 제약하는 결정을 **아키텍처 결정**이라고 볼 수 있다. 이러한 결정은 개발·테스트·배포·운영 등 여러 사람의 업무에 영향을 주므로 머릿속이나 회의 기록에만 남겨서는 안 된다.
 
-```plantuml
-@startuml
-left to right direction
-
-rectangle "품질 목표와 제약" as QualityGoals
-rectangle "큰 구조에 관한 결정" as ArchitectureDecision
-rectangle "개발·테스트·배포·운영\n방식에 영향" as WorkImpact
-rectangle "공통으로 참조할\n아키텍처 문서 필요" as DocumentationNeed
-
-QualityGoals --> ArchitectureDecision
-ArchitectureDecision --> WorkImpact
-WorkImpact --> DocumentationNeed
-@enduml
-```
+![품질 목표에서 아키텍처 문서까지의 흐름](diagrams/16-quality-to-documentation.png)
 
 > **아키텍처 문서의 목적은 이해관계자가 업무에 필요한 결정을 내릴 수 있게 하는 것이다.**
 
@@ -71,15 +48,7 @@ WorkImpact --> DocumentationNeed
 
 > **뷰는 실제 표현이고, 뷰타입과 스타일은 그 표현을 구성하는 규칙이다.**
 
-```plantuml
-@startuml
-rectangle "모듈 뷰타입" as Viewtype {
-  rectangle "계층 스타일" as Style
-  rectangle "온라인 서점의\nOrder·Catalog 표현" as View
-  Style --> View : 규칙 적용
-}
-@enduml
-```
+![뷰타입, 스타일, 뷰의 관계 예시](diagrams/17-viewtype-style-view.png)
 
 - **뷰**: 특정 이해관계자의 관심사를 위해 실제 시스템 일부를 표현한 결과물
 - **뷰타입**: 표현할 요소와 관계의 종류를 정한 범주
@@ -193,19 +162,7 @@ rectangle "모듈 뷰타입" as Viewtype {
 
 다이어그램은 뷰의 입구이지 전체 문서가 아니다. 그림만으로는 요소의 책임, 제약, 인터페이스, 설계 이유를 충분히 전달할 수 없다. 따라서 하나의 뷰는 다음 순서로 완성한다.
 
-```plantuml
-@startuml
-rectangle "다이어그램" as Diagram
-rectangle "요소 목록" as Catalog
-rectangle "인터페이스" as Interface
-rectangle "설계 근거" as Rationale
-rectangle "완전한 뷰" as View
-Diagram --> View
-Catalog --> View
-Interface --> View
-Rationale --> View
-@enduml
-```
+![완전한 뷰를 구성하는 설명 자료](diagrams/18-complete-view.png)
 
 ### 6.1 목적과 범위
 
@@ -244,18 +201,7 @@ Rationale --> View
 
 결과만 기록하면 조건이 변했을 때 결정을 유지해야 하는지 판단하기 어렵다.
 
-```plantuml
-@startuml
-left to right direction
-rectangle "500ms 응답·장애 격리" as Context
-rectangle "비동기 이벤트 채택" as Decision
-rectangle "지연·장애 전파 감소" as Benefit
-rectangle "중복·최종 일관성" as Cost
-Context --> Decision
-Decision --> Benefit
-Decision --> Cost
-@enduml
-```
+![결정의 맥락과 긍정적·부정적 결과](diagrams/19-decision-rationale.png)
 
 ```text
 맥락: 주문 응답은 500ms 이내여야 하고 알림 장애가 주문을 막으면 안 된다.
@@ -271,17 +217,7 @@ Decision --> Cost
 
 구조가 요소의 존재와 관계를 보여준다면, 인터페이스는 요소가 실제로 협력하기 위한 계약을 보여준다. 제공하는 API만 기록하고 필요한 환경을 생략하면 통합 실패가 발생한다.
 
-```plantuml
-@startuml
-component "호출자" as Client
-component "Order Service" as Order
-interface "제공: Order API" as Provided
-interface "요구: 인증 토큰·\n이벤트 스키마" as Required
-Client --> Provided
-Provided - Order
-Order --> Required
-@enduml
-```
+![제공 인터페이스와 요구 환경의 계약](diagrams/20-interface-contract.png)
 
 예를 들어 주문 API가 결제 승인 전에 호출되어야 하는 초기화 절차, 요구하는 인증 토큰, 의존하는 이벤트 스키마 버전을 숨기면 호출자는 계약을 만족할 수 없다. 따라서 인터페이스에는 다음을 포함한다.
 
@@ -294,15 +230,7 @@ Order --> Required
 
 > **인터페이스 문서에는 사용자가 의존해도 되는 정보만 공개한다.**
 
-```plantuml
-@startuml
-component "Order Service" as Order
-interface "Order API\n(공개 계약)" as API
-component "내부 검증기\n(비공개 구현)" as Validator
-Order - API
-Order ..> Validator : 내부에서만 사용
-@enduml
-```
+![공개 계약과 비공개 구현의 구분](diagrams/21-public-vs-private-interface.png)
 
 내부 구현까지 공개하면 작은 구현 변경도 계약 변경으로 번진다.
 
@@ -350,17 +278,7 @@ Container Platform의 인스턴스 교체
 
 > **같은 사실은 기준 위치를 하나 정하고 다른 뷰에서 링크해야 한다.**
 
-```plantuml
-@startuml
-rectangle "기준 정의\nOrder Service" as Source
-rectangle "모듈 뷰" as Module
-rectangle "C&C 뷰" as Runtime
-rectangle "배포 뷰" as Deployment
-Module ..> Source : 링크
-Runtime ..> Source : 링크
-Deployment ..> Source : 링크
-@enduml
-```
+![하나의 기준 정의를 참조하는 여러 뷰](diagrams/22-single-source-links.png)
 
 여러 뷰에 내용을 복사하지 않으면 변경 시 서로 다른 버전의 설명이 남는 문제를 줄일 수 있다.
 
@@ -389,17 +307,7 @@ Deployment ..> Source : 링크
 
 > **아키텍처 문서화는 결정의 원인에서 독자의 검증과 지속적인 갱신까지 이어지는 과정이다.**
 
-```plantuml
-@startuml
-left to right direction
-rectangle "원인·제약" as Context
-rectangle "결정 기록" as Record
-rectangle "독자 검증" as Review
-rectangle "갱신" as Update
-Context --> Record --> Review --> Update
-Update --> Record : 변경 반영
-@enduml
-```
+![원인에서 검증과 갱신까지의 문서화 순환](diagrams/23-documentation-cycle.png)
 
 1. 품질 목표와 제약 때문에 시스템 전체에 영향을 주는 결정이 생긴다.
 2. 이 결정을 여러 이해관계자가 사용하므로 문서화가 필요하다.
@@ -418,17 +326,7 @@ Update --> Record : 변경 반영
 
 수강신청 시스템을 대상으로 다음 순서로 수행한다.
 
-```plantuml
-@startuml
-left to right direction
-rectangle "질문 작성" as Questions
-rectangle "뷰 선택·작성" as Views
-rectangle "동작·매핑 기록" as Details
-rectangle "다른 팀의 검증" as Review
-rectangle "문서 수정" as Revision
-Questions --> Views --> Details --> Review --> Revision
-@enduml
-```
+![질문 작성에서 독자 검증까지의 학습 흐름](diagrams/24-learning-workflow.png)
 
 1. 학생, 교직원, 운영자, 보안 담당자의 질문을 각 2개씩 작성한다.
 2. 각 질문에 필요한 뷰를 선택하고 선택 이유를 쓴다.
@@ -441,17 +339,7 @@ Questions --> Views --> Details --> Review --> Revision
 
 > **평가에서는 그림의 아름다움보다 질문과 뷰의 적합성, 관계 의미의 명확성, 결정과 결과의 추적성을 우선한다.**
 
-```plantuml
-@startuml
-rectangle "평가" as Evaluation
-rectangle "질문↔뷰 적합성" as Fit
-rectangle "관계 의미의 명확성" as Clarity
-rectangle "결정↔결과 추적성" as Traceability
-Evaluation --> Fit
-Evaluation --> Clarity
-Evaluation --> Traceability
-@enduml
-```
+![아키텍처 문서 평가 기준](diagrams/25-evaluation-criteria.png)
 
 ## 참고 문헌
 
