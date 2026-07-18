@@ -106,6 +106,25 @@ endlegend
 
 세 뷰타입은 하나만 선택해야 하는 경쟁 관계가 아니다.
 
+### PDF에 제시된 뷰타입별 스타일
+
+| 뷰타입 | 스타일 또는 스타일 계열 | 핵심 요소와 관계 | 적용 예시 |
+|---|---|---|---|
+| 모듈(Module) | 분해(Decomposition) | 모듈과 `is-part-of` 관계 | `Order` 모듈을 application, domain, adapter 하위 모듈로 분해한다. |
+| 모듈(Module) | 사용(Uses) | 모듈과 `uses` 관계 | `Order Application`이 `Payment Port`의 올바른 구현에 의존한다. |
+| 모듈(Module) | 일반화(Generalization) | 모듈과 `is-a` 관계 | 여러 결제 어댑터가 공통 `Payment Adapter` 타입을 특수화한다. |
+| 모듈(Module) | 계층(Layered) | 계층과 `allowed-to-use` 관계 | Presentation 계층은 Application 계층을 거쳐 Domain 기능을 사용한다. |
+| 컴포넌트-커넥터(C&C) | 데이터스트림(Datastream) | 필터, 파이프, 비동기 데이터 스트림 | 주문 데이터가 검증·변환·저장 필터를 순서대로 통과한다. 대표 세부 스타일은 pipe-filter다. |
+| 컴포넌트-커넥터(C&C) | 호출-반환(Call-Return) | 서비스 제공자·요청자와 request-reply 관계 | Web App이 Order Service를 동기 호출한다. 대표 세부 스타일은 client-server와 peer-to-peer다. |
+| 컴포넌트-커넥터(C&C) | 공유 데이터(Shared-Data) | 저장소, 데이터 접근자, 읽기·쓰기 관계 | 여러 서비스가 공용 저장소를 통해 데이터를 공유한다. 대표 세부 스타일은 repository와 blackboard다. |
+| 컴포넌트-커넥터(C&C) | 발행-구독(Publish-Subscribe) | 발행자·구독자와 이벤트 버스 | Order Service가 `OrderPlaced`를 발행하면 여러 워커가 구독한다. 세부 스타일로 implicit invocation과 event-only가 있다. |
+| 컴포넌트-커넥터(C&C) | 통신 프로세스(Communicating Processes) | 프로세스·스레드와 메시지·동기화 관계 | 주문 프로세스와 재고 프로세스가 메시지를 교환하며 동시에 실행된다. |
+| 할당(Allocation) | 배포(Deployment) | 소프트웨어 요소와 실행 플랫폼의 `allocated-to` 관계 | Order Service 프로세스를 컨테이너 플랫폼 노드에 배포한다. |
+| 할당(Allocation) | 구현(Implementation) | 모듈과 파일·디렉터리·저장소의 `allocated-to` 관계 | `order.application` 모듈을 `src/order/application` 디렉터리에 둔다. |
+| 할당(Allocation) | 작업 배정(Work Assignment) | 소프트웨어 요소와 개발 조직의 `allocated-to` 관계 | 주문 모듈은 Order Team이, 결제 어댑터는 Payment Team이 담당한다. |
+
+*출처: Clements et al.,* Documenting Software Architectures: Views and Beyond, *Chapter 2, pp. 59–98; Chapter 4, pp. 117–125; Chapter 6, pp. 156–168.*
+
 ### 3.1 모듈 뷰타입: 코드는 어떻게 나뉘는가
 
 > **모듈 뷰는 구현 단위와 정적 관계를 보여준다.**
