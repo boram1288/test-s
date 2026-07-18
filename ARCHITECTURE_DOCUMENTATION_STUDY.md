@@ -518,37 +518,40 @@ end note
 
 ## 9. 여러 뷰를 연결해 하나의 시스템으로 만든다
 
-> **변경 영향을 끝까지 추적하려면 뷰 간 매핑이 필요하다.**
+> **같은 시스템을 설명하는 여러 뷰를 하나의 전체로 이해하려면 뷰 간 요소의 대응 관계를 명시해야 한다.**
 
-모듈 뷰는 변경된 코드를, C&C 뷰는 그 코드가 실행되는 서비스를, 배포 뷰는 서비스가 실행되는 환경을 보여준다. 그러나 각 뷰의 요소가 서로 어떻게 대응하는지 기록하지 않으면 코드 변경이 런타임과 배포에 미치는 영향을 이어서 추적할 수 없다.
+PDF는 뷰 간 매핑을 문서화할 때 한 뷰의 각 요소에 대응하는 다른 뷰의 요소를 기록하고, 그 대응이 부분적인지 전체적인지도 밝히라고 권고한다. 대응은 항상 1:1이 아니다. 하나의 모듈로 여러 런타임 인스턴스를 만들 수 있고, 여러 모듈을 하나의 런타임 요소로 패키징할 수도 있다.
 
-예를 들어 다음 매핑표는 하나의 구현 단위가 어떤 런타임 요소에 포함되고 어디에 배포되는지를 연결한다.
+다음 예에서는 `Order Module`과 `Payment Adapter`가 두 개의 `Order Service` 인스턴스에 구현되고, 각 인스턴스가 같은 컨테이너 플랫폼에 배포된다. 이 매핑을 통해 코드 요소에서 실행 요소와 배포 환경까지 이어서 찾을 수 있다.
 
-| 구현 모듈 | 대응하는 런타임 요소 | 배포 대상 | 매핑의 의미 |
-|---|---|---|---|
-| `order.application` | Order Service | Container Platform | 하나의 모듈로 여러 서비스 인스턴스를 실행한다. |
-| `payment.adapter` | Order Service | Container Platform | 여러 모듈을 하나의 서비스로 패키징한다. |
-| `notification` | Notification Worker | Worker Node | 하나의 모듈로 여러 워커 인스턴스를 실행한다. |
+```plantuml
+@startuml
+left to right direction
 
-이제 `payment.adapter`가 변경되면 표의 두 번째 행을 따라 다음 영향을 순서대로 확인할 수 있다.
+package "모듈 뷰" #DDEBFF {
+  [Order Module] as OrderModule
+  [Payment Adapter] as PaymentAdapter
+}
 
-```text
-payment.adapter 변경
-    ↓ 포함된 런타임 요소 확인
-Order Service 재빌드
-    ↓ 배포 대상 확인
-Container Platform의 인스턴스 교체
-    ↓ 변경된 책임 검증
-결제 승인 시나리오 회귀 테스트
+package "C&C 뷰" #E2F4DF {
+  [Order Service #1] as Order1
+  [Order Service #2] as Order2
+}
+
+package "배포 뷰" #FFF0D6 {
+  node "Container Platform" as Platform
+}
+
+OrderModule ..> Order1 : implements
+OrderModule ..> Order2 : implements
+PaymentAdapter ..> Order1 : included in
+PaymentAdapter ..> Order2 : included in
+Order1 ..> Platform : deployed on
+Order2 ..> Platform : deployed on
+@enduml
 ```
 
-> **같은 사실은 기준 위치를 하나 정하고 다른 뷰에서 링크해야 한다.**
-
-뷰 간 매핑은 필요하지만, 매핑을 만들기 위해 요소의 상세 설명을 모든 뷰에 복사해서는 안 된다. 예를 들어 Order Service의 책임과 인터페이스는 C&C 뷰를 기준 위치로 정하고, 모듈 뷰와 배포 뷰에는 그 요소를 식별할 이름이나 링크만 기록한다.
-
-![하나의 기준 정의를 참조하는 여러 뷰](diagrams/22-single-source-links.png)
-
-따라서 매핑표는 **뷰 사이의 대응 관계**를 관리하고, 기준 위치는 **요소의 상세 정보**를 관리한다. 이 둘을 함께 사용하면 변경 영향을 추적하면서도 여러 뷰에 서로 다른 버전의 설명이 남는 문제를 줄일 수 있다.
+*출처: Clements et al.,* Documenting Software Architectures: Views and Beyond, *pp. 253–254, “Mapping Between Views”.*
 
 ## 10. 문서는 독자가 사용할 수 있을 때 완성된다
 
