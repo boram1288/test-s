@@ -1,10 +1,8 @@
 # 소프트웨어 아키텍처 문서화: 이유에서 검증까지
 
-이 자료는 Paul Clements 외, *Documenting Software Architectures: Views and Beyond*(2016)의 핵심 개념을 실제 문서화 과정에서 자연스럽게 생기는 질문을 따라가면서 설명한다.
+이 자료는 Paul Clements 외, *Documenting Software Architectures: Views and Beyond*(2016)의 핵심 개념을 실제 문서화 과정에서 생기는 질문을 따라가면서 설명한다.
 
 > **전체 흐름: 중요한 결정을 공유해야 한다 → 한 그림으로는 부족하다 → 이해관계자에 맞는 뷰를 고른다 → 구조와 동작을 명확하게 기록한다 → 뷰를 연결한다 → 독자가 사용할 수 있는지 검증한다.**
-
-![아키텍처 문서화 전체 흐름 예시](diagrams/15-documentation-flow.png)
 
 ## 1. 왜 아키텍처를 문서화하는가
 
