@@ -20,8 +20,8 @@ left to right direction
 
 rectangle "품질 목표와 제약" as QualityGoals
 rectangle "큰 구조에 관한 결정" as ArchitectureDecision
-rectangle "개발·테스트·배포·운영 방식에 영향" as WorkImpact
-rectangle "공통으로 참조할 아키텍처 문서 필요" as DocumentationNeed
+rectangle "개발·테스트·배포·운영\n방식에 영향" as WorkImpact
+rectangle "공통으로 참조할\n아키텍처 문서 필요" as DocumentationNeed
 
 QualityGoals --> ArchitectureDecision
 ArchitectureDecision --> WorkImpact
